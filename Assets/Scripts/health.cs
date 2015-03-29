@@ -63,9 +63,9 @@ public class health : MonoBehaviour {
 
         if (shieldIsDestroyed)
         {
-            if (!playerShieldCollider.activeSelf)
+            if (playerShieldCollider.activeSelf)
             {
-                playerShieldCollider.SetActive(true);
+                playerShieldCollider.SetActive(false);
             }
         }
 
@@ -73,7 +73,7 @@ public class health : MonoBehaviour {
         {
             if (!playerShieldCollider.activeSelf)
             {
-                playerShieldCollider.SetActive(false);
+                playerShieldCollider.SetActive(true);
             }
         }
 
@@ -107,22 +107,22 @@ public class health : MonoBehaviour {
             if (currentPlayerHealth <= 0 && !playerDead)
             {
                 playerDead = true;
-                if (Originator == "Player1" && this.gameObject.tag == "Player1")
+                if (Originator == "Player1Shot" && this.gameObject.tag == "Player1")
                 {
                 GameManager.p1deaths++;
                 }
-                else if (Originator == "Player2" && this.gameObject.tag == "Player1")
+                else if (Originator == "Player2Shot" && this.gameObject.tag == "Player1")
                 {
                     GameManager.p1deaths++;
                     GameManager.p2kills++;
                 }
 
-                else if (Originator == "Player1" && this.gameObject.tag == "Player2")
+                else if (Originator == "Player1Shot" && this.gameObject.tag == "Player2")
                 {
                     GameManager.p2deaths++;
                     GameManager.p1kills++;
                 }
-                else if (Originator == "Player2" && this.gameObject.tag == "Player2")
+                else if (Originator == "Player2Shot" && this.gameObject.tag == "Player2")
                 {
                     GameManager.p2deaths++;
                 }

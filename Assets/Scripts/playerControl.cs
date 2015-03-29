@@ -117,7 +117,21 @@ public class playerControl : MonoBehaviour
     {
         projectileClone = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity) as GameObject;
         //AudioSource.PlayClipAtPoint(projectileShotAudio, shootPoint.transform.position);
-        projectileClone.tag = this.gameObject.tag;
+           switch (this.gameObject.tag)
+            {
+                case("Player1"):
+                projectileClone.gameObject.tag = "Player1Shot";
+                break;
+                case ("Player2"):
+                projectileClone.gameObject.tag = "Player2Shot";
+                break;
+                case ("Player3"):
+                projectileClone.gameObject.tag = "Player3Shot";
+                break;
+                case ("Player4"):
+                projectileClone.gameObject.tag = "Player4Shot";
+                break;
+            }
         projectileClone.GetComponent<Rigidbody2D>().isKinematic = false;
         projectileClone.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileForce);
         fireRate = 1F;
@@ -134,14 +148,13 @@ public class playerControl : MonoBehaviour
             angle2 = 90F - angle;
             transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
         }
-        
-        GetComponent<Rigidbody2D>().position = new Vector2
+
+        /*GetComponent<Rigidbody2D>().position = new Vector2
         (
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.x, boundary.xMin, boundary.xMax),
-            Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, boundary.yMin, boundary.yMax));
+            Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, boundary.yMin, boundary.yMax));*/
     }
-
-  
 }
+
 
 
