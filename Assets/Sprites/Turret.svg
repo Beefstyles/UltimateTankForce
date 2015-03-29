@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="500"
+   height="500"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="New document 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="309.63639"
+     inkscape:cy="403.84776"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1018"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-552.36218)">
+    <rect
+       style="fill:none;stroke:none"
+       id="rect2993"
+       width="660.63977"
+       height="587.90875"
+       x="-98.994949"
+       y="-41.441765"
+       transform="translate(0,552.36218)"
+       rx="0.80000001"
+       ry="0.12626907" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Turret">
+    <path
+       sodipodi:type="arc"
+       style="fill:#b3b3b3;stroke:#b3b3b3;stroke-width:3.11299992;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path2998"
+       sodipodi:cx="256.57874"
+       sodipodi:cy="279.78674"
+       sodipodi:rx="204.05081"
+       sodipodi:ry="204.05081"
+       d="m 460.62955,279.78674 a 204.05081,204.05081 0 1 1 -408.101626,0 204.05081,204.05081 0 1 1 408.101626,0 z"
+       transform="translate(-10.101525,-34.345187)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:3.11299992;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3000"
+       sodipodi:cx="269.71072"
+       sodipodi:cy="266.65475"
+       sodipodi:rx="158.59395"
+       sodipodi:ry="158.59395"
+       d="m 428.30467,266.65475 a 158.59395,158.59395 0 1 1 -317.18789,0 158.59395,158.59395 0 1 1 317.18789,0 z"
+       transform="translate(-22.223356,-22.223356)" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffff00;stroke:#ffff00;stroke-width:3.11299992;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3004"
+       sodipodi:sides="5"
+       sodipodi:cx="187.88837"
+       sodipodi:cy="215.13698"
+       sodipodi:r1="72.84314"
+       sodipodi:r2="58.931335"
+       sodipodi:arg1="0.5880026"
+       sodipodi:arg2="1.2163211"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 248.49752,255.54308 -80.30838,29.7228 -53.08472,-67.19296 47.50022,-71.25033 82.44147,23.15783 z"
+       inkscape:transform-center-x="6.0873963"
+       inkscape:transform-center-y="0.90725631"
+       transform="translate(62.629458,20.203051)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#0000ff;stroke:#0000ff;stroke-width:3.11299992;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="path3006"
+       sodipodi:cx="261.62952"
+       sodipodi:cy="242.4111"
+       sodipodi:rx="17.172594"
+       sodipodi:ry="17.172594"
+       d="m 278.80211,242.4111 a 17.172594,17.172594 0 1 1 -34.34519,0 17.172594,17.172594 0 1 1 34.34519,0 z"
+       transform="translate(-12.121831,-6.0609153)" />
+  </g>
+</svg>
