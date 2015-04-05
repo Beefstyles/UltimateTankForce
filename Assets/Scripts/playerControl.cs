@@ -16,7 +16,7 @@ public class playerControl : MonoBehaviour
     public GameObject projectile;
     public GameObject shootPoint;
     private GameObject projectileClone;
-    private float projectileForce = 2000F;
+    private float projectileForce = 5000F;
     bool playerIndexSet = false;
     public PlayerIndex playerIndex;
     GamePadState previousState;
@@ -30,9 +30,10 @@ public class playerControl : MonoBehaviour
     public GameObject shield;
     private LineRenderer shootLine;
     GameManagerScript GameManager;
-    public Vector2 testVelocity;
+    public Vector2 objectVelocity;
     public GameObject projectileShotLoc;
     private AudioClip projectileShotAudio;
+    private Transform train;
    
 
 
@@ -44,6 +45,7 @@ public class playerControl : MonoBehaviour
                fireRate = 1F;
                GamePad.SetVibration(playerIndex, 0, 0);
                projectileShotAudio = projectileShotLoc.GetComponent<AudioClip>();
+               train = (GameObject.Find("PlayerTrain")).transform;
     }
 
     void Update()
@@ -116,6 +118,8 @@ public class playerControl : MonoBehaviour
     void Shoot()
     {
         projectileClone = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity) as GameObject;
+        projectileClone.transform.parent = this.transform.parent;
+        Debug.Log(projectileClone.transform.parent.ToString());
         //AudioSource.PlayClipAtPoint(projectileShotAudio, shootPoint.transform.position);
            switch (this.gameObject.tag)
             {

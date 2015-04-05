@@ -16,12 +16,7 @@ public class GameManagerScript : MonoBehaviour
      public GameObject gamePlane;
      public int p1kills, p2kills, p1deaths, p2deaths;
      public Text p1KillCounter, p2KillCounter, p1DeathCounter, p2DeathCounter;
-     public float GameTimer;
-     public int gameTimerMinutes;
-     public int gameTimerSeconds;
-     private string gameTimerSecondsString;
-     public Text GameTimerTextMinutes;
-     public Text GameTimerTextSeconds;
+     
      public GameObject gameOverScreen;
    
 
@@ -32,7 +27,7 @@ public class GameManagerScript : MonoBehaviour
         p2kills = 0;
         p1deaths = 0;
         p2deaths = 0;
-        GameTimer = 300F;
+        
     }
 
     // Update is called once per frame
@@ -42,28 +37,5 @@ public class GameManagerScript : MonoBehaviour
         p2KillCounter.text = p2kills.ToString();
         p1DeathCounter.text = p1deaths.ToString();
         p2DeathCounter.text = p2deaths.ToString();
-
-        if (GameTimer >= 0)
-        {
-            GameTimer -= Time.deltaTime;
-        }
-        
-
-        gameTimerMinutes = Mathf.FloorToInt(GameTimer / 60);
-        gameTimerSeconds = Mathf.FloorToInt(GameTimer - (gameTimerMinutes * 60));
-        GameTimerTextMinutes.text = gameTimerMinutes.ToString();
-        gameTimerSecondsString = gameTimerSeconds.ToString();
-        if (gameTimerSecondsString.Length < 2)
-        {
-            gameTimerSecondsString = "0" + gameTimerSeconds;
-        }
-        GameTimerTextSeconds.text = gameTimerSecondsString;
-     
-
-
-        if (GameTimer <= 0)
-        {
-            gameOverScreen.SetActive(true);
-        }
     }
 }

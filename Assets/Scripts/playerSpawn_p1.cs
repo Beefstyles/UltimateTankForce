@@ -8,6 +8,7 @@ public class playerSpawn_p1 : MonoBehaviour
     public PlayerIndex playerIndex;
     public GameObject player1;
     public GameObject playerInstance;
+    private Transform train;
     uint lastPacketNumber;
     float lastPacketTime;
     public Text PlayerSpawnText;
@@ -15,7 +16,7 @@ public class playerSpawn_p1 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        train = (GameObject.Find("PlayerTrain")).transform;
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class playerSpawn_p1 : MonoBehaviour
                 if (currentState.Buttons.A == ButtonState.Pressed)
                 {
                     playerInstance = Instantiate(player1, this.transform.position, this.transform.rotation) as GameObject;
+                    playerInstance.transform.parent = train;
                     playerInstance.GetComponent<playerControl>().playerIndex = playerIndex;
                     PlayerSpawnText.enabled = false;
                 }

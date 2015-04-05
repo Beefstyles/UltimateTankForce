@@ -8,7 +8,14 @@ public class EnemyHealth : MonoBehaviour {
     public int currentHealth;
     private bool Dead;
     public GameObject TurretDead;
-    public GameObject turretChar;
+
+    private Color fullHealth = new Color(1F, 1F, 1F, 1F);
+    private Color fourthHealth = new Color(1F, 1F, 1F, .95F);
+    private Color thirdHealth = new Color(1F, 1F, 1F, .9F);
+    private Color secondHealth = new Color(1F, 1F, 1F, .85F);
+    private Color firstHealth= new Color(1F, 1F, 1F, .8F);
+    
+    private SpriteRenderer enemySprite;
     private GameObject enemyDead;
     public float shieldRechargeTime = 3F;
     GameManagerScript GameManager;
@@ -16,23 +23,40 @@ public class EnemyHealth : MonoBehaviour {
     void Awake()
     {
         currentHealth = Health;
-       
-        GameManager = GetComponent<GameManagerScript>();
+        GameManager = FindObjectOfType<GameManagerScript>();
+        enemySprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-
+        switch (currentHealth)
+        {
+            case 5:
+                enemySprite.color = fullHealth;
+                break;
+            case 4:
+                enemySprite.color = fourthHealth;
+                break;
+            case 3:
+                enemySprite.color = thirdHealth;
+                break;
+            case 2:
+                enemySprite.color = secondHealth;
+                break;
+            case 1:
+                enemySprite.color = firstHealth;
+                break;
+        }
     }
 
-    public void TakeDamage(int amount, string target)
+    public void TakeDamage(int amount, string target, string Originator)
     {
         if (target == "Enemy")
         {
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
-                 StartCoroutine("ShieldDeath");
+                StartCoroutine("EnemyDeath");
             }
         }
                 
@@ -42,12 +66,9 @@ public class EnemyHealth : MonoBehaviour {
 
     IEnumerator EnemyDeath()
     {
-        if (this.gameObject.tag == "Player1")
-        {
-            enemyDead = Instantiate(TurretDead, turretChar.transform.position, turretChar.transform.rotation) as GameObject;
-        }
-        Destroy(this.gameObject);
+        enemyDead = Instantiate(TurretDead, this.gameObject.transform.position, this.gameObject.transform.rotation) as GameObject;
         yield return new WaitForSeconds(1F);
+        Destroy(this.gameObject);
     }
 
 	

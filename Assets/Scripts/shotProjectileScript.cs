@@ -5,6 +5,8 @@ public class shotProjectileScript : MonoBehaviour
 {
     public int attackDamage;
     health Health;
+    EnemyHealth EnemyHealth;
+    CoreHealth CoreHealth;
     public float lifeTime;
     void Start () {
         lifeTime = 7F;
@@ -41,10 +43,17 @@ public class shotProjectileScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        else if (coll.gameObject.tag == "Turret")
+        else if (coll.gameObject.tag == "Turret" && this.gameObject.tag != "TurretShot")
         {
-            Health = coll.gameObject.GetComponentInParent<health>();
-            Health.TakeDamage(attackDamage, "Enemy", this.gameObject.tag);
+            EnemyHealth = coll.gameObject.GetComponentInParent<EnemyHealth>();
+            EnemyHealth.TakeDamage(attackDamage, "Enemy", this.gameObject.tag);
+            Destroy(this.gameObject);
+        }
+
+        else if (coll.gameObject.tag == "CoreTarget" && this.gameObject.tag != "Player1Shot" && this.gameObject.tag != "Player2Shot" && this.gameObject.tag != "Player3Shot" && this.gameObject.tag != "Player4Shot")
+        {
+            CoreHealth = coll.gameObject.GetComponentInParent<CoreHealth>();
+            CoreHealth.TakeDamage(attackDamage, "Enemy", this.gameObject.tag);
             Destroy(this.gameObject);
         }
 

@@ -1,54 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
-using XInputDotNetPure;
 
-
-public class EnemyControl : MonoBehaviour
+public class PlayerAIShooting : MonoBehaviour 
 {
     public bool targetAcquired;
     public bool targetAttackable;
     public GameObject target;
-    
     LineRenderer targetRay;
     private Vector2 turretPos;
+    public GameObject shootPoint;
     Vector2 testRay2D;
     RaycastHit2D[] testRay;
     public GameObject projectile;
     private GameObject projectileClone;
-    private float projectileForce = 4000F;
+    private float projectileForce = 2000F;
     private float fireRate;
     public Vector2 projectileDirectionHeading;
     public float projectileDirectionMag;
     public Vector2 projectileDirection;
     private Vector2 targetVelocity;
     private Vector3 headingVelocity;
-    GameManagerScript GameManager;
-    playerControl controlScript;
     public int x, y;
-    private string AITargetString;
 
     void Start()
     {
                fireRate = 1F;
-               targetRay = GetComponent<LineRenderer>();
-               AITargetString = "CoreTarget";
-
-         }
+    }
 
     void OnTriggerStay2D(Collider2D targetColl)
     {
-       if (targetColl.gameObject.tag == AITargetString)
+        if (targetColl.gameObject.tag == "Player1")
         {
             targetAcquired = true;
             if (targetColl.gameObject != null)
             {
-                controlScript = targetColl.gameObject.GetComponentInParent<playerControl>();
-                if (controlScript != null)
-                {
-                    targetVelocity = controlScript.objectVelocity;
-                    headingVelocity = new Vector3(targetVelocity.x, targetVelocity.y, 0);
-                }
-                                
+                headingVelocity = new Vector3 (targetVelocity.x, targetVelocity.y, 0);
                 target = targetColl.gameObject;
                 turretPos = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
                 testRay2D = new Vector2 (target.transform.position.x, target.transform.position.y);
@@ -70,7 +56,7 @@ public class EnemyControl : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D targetColl)
     {
-        if (targetColl.gameObject.tag == AITargetString)
+        if (targetColl.gameObject.tag == "Player1")
         {
             if (targetRay.enabled)
             {
@@ -100,23 +86,12 @@ public class EnemyControl : MonoBehaviour
    
     void Shoot()
     {
-        StartCoroutine("targetLine");
-        projectileClone = Instantiate(projectile, this.transform.position, Quaternion.identity) as GameObject;
-        projectileClone.transform.parent = this.transform;
-        projectileClone.gameObject.tag = "TurretShot";
+        projectileClone = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity) as GameObject;
+        projectileClone.gameObject.tag = "Player2Shot";
         projectileClone.GetComponent<Rigidbody2D>().isKinematic = false;
         projectileClone.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileForce);
         fireRate = 3F;
     }
 
-    IEnumerator targetLine()
-    {
-        targetRay.enabled = true;
-        targetRay.SetPosition(0, this.transform.position);
-        targetRay.SetPosition(1, target.transform.position);
-        yield return new WaitForSeconds(1F);
-        targetRay.enabled = false;
-    }
 }
-
 
