@@ -12,7 +12,7 @@ public class health : MonoBehaviour {
     private bool playerDead;
     public GameObject playerShield;
     public GameObject playerChar;
-    public GameObject p1Dead;
+    public GameObject playerDeadCorpse;
     private GameObject playerCharDead;
     private SpriteRenderer playerShieldSprite;
     private Color fullShield = new Color (1F, 1F, 1F, 1F);
@@ -144,7 +144,7 @@ public class health : MonoBehaviour {
         //playerControl.VibrateController(0.5F);
         if (this.gameObject.tag == "Player1" || this.gameObject.tag == "Player2")
         {
-            playerCharDead = Instantiate(p1Dead, playerChar.transform.position, playerChar.transform.rotation) as GameObject;
+            playerCharDead = Instantiate(playerDeadCorpse, playerChar.transform.position, playerChar.transform.rotation) as GameObject;
         }
         yield return new WaitForSeconds(0.2F);
         Destroy(this.gameObject);

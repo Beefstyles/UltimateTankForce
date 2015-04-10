@@ -20,18 +20,34 @@ public class PlayerAIShooting : MonoBehaviour
     public Vector2 projectileDirection;
     private Vector2 targetVelocity;
     private Vector3 headingVelocity;
+    private Vector3 rotationDirection;
+    AIControlScript AIControlScript;
+    public GameObject shield;
+    public bool shieldOff;
+    public float shieldOffTimer;
+
     public int x, y;
 
     void Start()
     {
                fireRate = 1F;
+               AIControlScript = GetComponent<AIControlScript>();
     }
 
-    void OnTriggerStay2D(Collider2D targetColl)
+    void OnTriggerEnter2D(Collider2D targetColl)
     {
         if (targetColl.gameObject.tag == "Player1")
         {
+            Debug.Log("Something entered called " + targetColl.name.ToString());
             targetAcquired = true;
+        }
+    }
+    void OnTriggerStay2D(Collider2D targetColl)
+    {
+        
+        if (targetColl.gameObject.tag == "Player1")       
+        {
+           // Debug.Log("Something is staying called " + targetColl.name.ToString());
             if (targetColl.gameObject != null)
             {
                 headingVelocity = new Vector3 (targetVelocity.x, targetVelocity.y, 0);
@@ -56,16 +72,18 @@ public class PlayerAIShooting : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D targetColl)
     {
-        if (targetColl.gameObject.tag == "Player1")
-        {
-            if (targetRay.enabled)
+        if (targetColl.gameObject.tag == "Player1") {
+            targetAcquired = false;
+            //Debug.Log("Something left called " + targetColl.name.ToString());
+           if (targetRay.enabled)
             {
                 targetRay.enabled = false;
             }
+            target = null;
             targetAttackable = false;
-            targetAcquired = false;
-           }
-     }
+            
+        }
+       }
 
     void Update()
     {
@@ -74,11 +92,41 @@ public class PlayerAIShooting : MonoBehaviour
             fireRate -= Time.deltaTime;
         }
 
+        
+
+        if (shieldOffTimer >= 0)
+        {
+            shieldOffTimer -= Time.deltaTime;
+            if (shield.activeSelf)
+            {
+                shield.SetActive(false);
+            }
+        }
+
+        else if (shieldOffTimer <= 0)
+        {
+            if (!shield.activeSelf)
+            {
+                shield.SetActive(true);
+            }
+        }
+        
+
         if (fireRate <= 0 && targetAcquired == true && target != null && targetAttackable == true)
         {
-            projectileDirectionHeading = (target.transform.position) - this.transform.position;
+            if (target.transform.position != null)
+            {
+                projectileDirectionHeading = (target.transform.position) - this.transform.position;
+            }
             projectileDirectionMag = projectileDirectionHeading.magnitude;
             projectileDirection = projectileDirectionHeading / projectileDirectionMag;
+            rotationDirection = this.transform.position - target.transform.position;
+            shieldOffTimer = 1F;
+            if (rotationDirection.x != 0.0F || rotationDirection.y != 0.0F)
+            {
+                float angle = Mathf.Atan2(-rotationDirection.y, -rotationDirection.x) * Mathf.Rad2Deg;
+                AIControlScript.body.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
             Shoot();
         }
     }
@@ -90,7 +138,7 @@ public class PlayerAIShooting : MonoBehaviour
         projectileClone.gameObject.tag = "Player2Shot";
         projectileClone.GetComponent<Rigidbody2D>().isKinematic = false;
         projectileClone.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileForce);
-        fireRate = 3F;
+        fireRate = 1F;
     }
 
 }

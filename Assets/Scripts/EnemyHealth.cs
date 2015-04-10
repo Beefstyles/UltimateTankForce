@@ -67,7 +67,7 @@ public class EnemyHealth : MonoBehaviour {
     IEnumerator EnemyDeath()
     {
         enemyDead = Instantiate(TurretDead, this.gameObject.transform.position, this.gameObject.transform.rotation) as GameObject;
-        yield return new WaitForSeconds(1F);
+        yield return new WaitForSeconds(0.1F);
         Destroy(this.gameObject);
     }
 

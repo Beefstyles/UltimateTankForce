@@ -17,7 +17,7 @@ public class AIControlScript : MonoBehaviour {
     public Path path;
 
     //The AI's speed per second
-    public float speed = 250F;
+    private float speed = 80F;
 
 
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
@@ -28,46 +28,48 @@ public class AIControlScript : MonoBehaviour {
 
     //public GameObject target;
 
-
+    private Vector3 dir; 
+    public Vector3 rotationDirection;
+    public GameObject body;
+    PlayerAIShooting PlayerAIShooting;
+    AITargets[] AITargets;
 
     public void Start()
     {
-        targetPosition = AITargetGO.transform.position;
+        AITargets = FindObjectsOfType<AITargets>();
+
         seeker = GetComponent<Seeker>();
         StartCoroutine(AITarget("Home"));
+        PlayerAIShooting = GetComponent<PlayerAIShooting>();
     }
 
-    void OnCollisionEnter2D(Collision2D coll)
-    {
-       
-    }
 
    IEnumerator AITarget(string target)
     {
-        if (target == "Ball")
-        {
-            targetPosition = this.transform.position;
-            Path pNew = seeker.GetNewPath(transform.position, targetPosition);
-            seeker.StartPath(pNew, OnPathComplete);
-
-        }
         if (target == "Home")
         {
-                Path pNew = seeker.GetNewPath(transform.position, targetPosition);
-                seeker.StartPath(pNew, OnPathComplete); 
+            AITargets thisAiTarget = AITargets[Random.Range(0, AITargets.Length)];
+            targetPosition = thisAiTarget.transform.position;
+            Path pNew = seeker.GetNewPath(transform.position, targetPosition);
+            seeker.StartPath(pNew, OnPathComplete);  
             }
         yield return new WaitForSeconds(1F);
     }
     public void OnPathComplete(Path p)
     {
+        //StartCoroutine(AITarget("Home"));
         //Debug.Log ("Yay, we got a path back. Did it have an error? "+p.error);
+        //if (targetPosition != AITargetGO.transform.position)
+        //{
+            
+            
+        //}
         if (!p.error)
         {
             path = p;
             //Reset the waypoint counter
             currentWaypoint = 0;
             return;
-
         }
     }
 
@@ -84,8 +86,14 @@ public class AIControlScript : MonoBehaviour {
 
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            //Debug.Log ("End Of Path Reached");
-           
+            StartCoroutine(AITarget("Home"));
+            Debug.Log ("End Of Path Reached");
+            //if (targetPosition != AITargetGO.transform.position)
+            //{
+                //AITargets thisAiTarget = AITargets[Random.Range(0, AITargets.Length)];
+                //targetPosition = thisAiTarget.transform.position;
+                
+            //}
             return;
         }
 
@@ -93,14 +101,37 @@ public class AIControlScript : MonoBehaviour {
         if (currentWaypoint == path.vectorPath.Count)
         {
             currentWaypoint++;
-            //Debug.Log ("End Of Path Reached");
+            StartCoroutine(AITarget("Home"));
+            Debug.Log ("End Of Path Reached");
             return;
         }
 
         //Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.deltaTime;
+
+        rotationDirection = this.transform.position - targetPosition;
+        if (PlayerAIShooting.targetAcquired != true)
+        {
+            if (rotationDirection.x != 0.0F || rotationDirection.y != 0.0F)
+            {
+                float angle = Mathf.Atan2(-rotationDirection.y, -rotationDirection.x) * Mathf.Rad2Deg;
+                body.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+        }
+        
+
         transform.Translate(dir);
+
+
+        //if (targetPosition != AITargetGO.transform.position)
+        //{
+        //    AITargets thisAiTarget = AITargets[Random.Range(0, AITargets.Length)];
+        //    targetPosition = thisAiTarget.transform.position;
+        //    StartCoroutine(AITarget("Home"));
+        //}
+        
+       
 
 
         //Check if we are close enough to the next waypoint

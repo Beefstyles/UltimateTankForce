@@ -23,6 +23,7 @@ public class shotProjectileScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        AstarPath.active.UpdateGraphs(this.GetComponent<Collider2D>().bounds);
 	}
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -44,6 +45,13 @@ public class shotProjectileScript : MonoBehaviour
         }
 
         else if (coll.gameObject.tag == "Turret" && this.gameObject.tag != "TurretShot")
+        {
+            EnemyHealth = coll.gameObject.GetComponentInParent<EnemyHealth>();
+            EnemyHealth.TakeDamage(attackDamage, "Enemy", this.gameObject.tag);
+            Destroy(this.gameObject);
+        }
+
+        else if (coll.gameObject.tag == "EnemySeeker")
         {
             EnemyHealth = coll.gameObject.GetComponentInParent<EnemyHealth>();
             EnemyHealth.TakeDamage(attackDamage, "Enemy", this.gameObject.tag);
