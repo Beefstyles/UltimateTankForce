@@ -65,6 +65,12 @@ public class shotProjectileScript : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        else if (coll.gameObject.tag == "Player1Shot" || coll.gameObject.tag == "Player2Shot" || coll.gameObject.tag == "Player3Shot" || coll.gameObject.tag == "Player4Shot")
+        {
+            Destroy(coll.gameObject);
+            Destroy(this.gameObject);
+        }
+
         
     }
 

@@ -33,27 +33,35 @@ public class AIControlScript : MonoBehaviour {
     public GameObject body;
     PlayerAIShooting PlayerAIShooting;
     AITargets[] AITargets;
+    private int targetX;
+    private int targetY;
+    private int transformX;
+    private int transformY;
+    public bool newPathRequested;
 
     public void Start()
     {
         AITargets = FindObjectsOfType<AITargets>();
-
         seeker = GetComponent<Seeker>();
-        StartCoroutine(AITarget("Home"));
+        newPathRequested = true;
+        AITarget("Home");
+        //StartCoroutine(AITarget("Home"));
         PlayerAIShooting = GetComponent<PlayerAIShooting>();
     }
 
-
-   IEnumerator AITarget(string target)
+    
+   void AITarget(string target)
     {
-        if (target == "Home")
+        if (target == "Home" && newPathRequested == true)
         {
+            newPathRequested = false;
             AITargets thisAiTarget = AITargets[Random.Range(0, AITargets.Length)];
             targetPosition = thisAiTarget.transform.position;
-            Path pNew = seeker.GetNewPath(transform.position, targetPosition);
-            seeker.StartPath(pNew, OnPathComplete);  
+            seeker.StartPath(transform.position, targetPosition, OnPathComplete);
+            //Path pNew = seeker.GetNewPath(transform.position, targetPosition);
+            //seeker.StartPath(pNew, OnPathComplete);  
             }
-        yield return new WaitForSeconds(1F);
+      
     }
     public void OnPathComplete(Path p)
     {
@@ -71,6 +79,10 @@ public class AIControlScript : MonoBehaviour {
             currentWaypoint = 0;
             return;
         }
+        else
+        {
+            return;
+        }
     }
 
 
@@ -86,8 +98,12 @@ public class AIControlScript : MonoBehaviour {
 
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            StartCoroutine(AITarget("Home"));
-            Debug.Log ("End Of Path Reached");
+            Debug.Log("Freezing at currentWaypoint >= path.vectorPath.Count");
+            newPathRequested = true;
+            currentWaypoint = 0;
+            AITarget("Home");
+            
+            //Debug.Log ("End Of Path Reached");
             //if (targetPosition != AITargetGO.transform.position)
             //{
                 //AITargets thisAiTarget = AITargets[Random.Range(0, AITargets.Length)];
@@ -100,8 +116,11 @@ public class AIControlScript : MonoBehaviour {
 
         if (currentWaypoint == path.vectorPath.Count)
         {
+            Debug.Log("currentWaypoint == path.vectorPath.Count");
             currentWaypoint++;
-            StartCoroutine(AITarget("Home"));
+            newPathRequested = true;
+            currentWaypoint = 0;
+            AITarget("Home");
             Debug.Log ("End Of Path Reached");
             return;
         }
@@ -111,7 +130,7 @@ public class AIControlScript : MonoBehaviour {
         dir *= speed * Time.deltaTime;
 
         rotationDirection = this.transform.position - targetPosition;
-        if (PlayerAIShooting.targetAcquired != true)
+        if (!PlayerAIShooting.targetAcquired && !PlayerAIShooting.targetShotNearby)
         {
             if (rotationDirection.x != 0.0F || rotationDirection.y != 0.0F)
             {
@@ -119,10 +138,8 @@ public class AIControlScript : MonoBehaviour {
                 body.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
         }
-        
 
         transform.Translate(dir);
-
 
         //if (targetPosition != AITargetGO.transform.position)
         //{
@@ -130,10 +147,8 @@ public class AIControlScript : MonoBehaviour {
         //    targetPosition = thisAiTarget.transform.position;
         //    StartCoroutine(AITarget("Home"));
         //}
+
         
-       
-
-
         //Check if we are close enough to the next waypoint
         //If we are, proceed to follow the next waypoint
         if (Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]) < nextWaypointDistance)
@@ -142,7 +157,7 @@ public class AIControlScript : MonoBehaviour {
             return;
         }
 
-            }
-        }
+       }
+}
 
 

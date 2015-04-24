@@ -12,11 +12,13 @@ public class playerSpawn_p1 : MonoBehaviour
     uint lastPacketNumber;
     float lastPacketTime;
     public Text PlayerSpawnText;
+    GameManagerScript GameManagerScript;
 
     // Use this for initialization
     void Start()
     {
-        train = (GameObject.Find("PlayerTrain")).transform;
+//        train = (GameObject.Find("PlayerTrain")).transform;
+        GameManagerScript = FindObjectOfType<GameManagerScript>();
     }
 
     // Update is called once per frame
@@ -24,22 +26,21 @@ public class playerSpawn_p1 : MonoBehaviour
     {
         GamePadState currentState = GamePad.GetState(playerIndex);
 
-        if (playerInstance == null)
-        {
 
             if (playerInstance == null)
             {
                 PlayerSpawnText.enabled = true;
                 //check to see if the player pushed the A button
-                if (currentState.Buttons.A == ButtonState.Pressed)
+                if (currentState.Buttons.A == ButtonState.Pressed && GameManagerScript.p1Spawnable)
                 {
                     playerInstance = Instantiate(player1, this.transform.position, this.transform.rotation) as GameObject;
-                    playerInstance.transform.parent = train;
+                    //playerInstance.transform.parent = train;
                     playerInstance.GetComponent<playerControl>().playerIndex = playerIndex;
                     PlayerSpawnText.enabled = false;
+                    GameManagerScript.p1Alive = true;
                 }
             }
-                    }
+                    
         else
         {
             //if (currentState.Buttons.Back == ButtonState.Pressed)

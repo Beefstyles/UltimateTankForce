@@ -13,7 +13,7 @@ public class GameTimer : MonoBehaviour {
     GameManagerScript GameManager;
 	// Use this for initialization
 	void Start () {
-        GameTimerF = 300F;
+        GameTimerF = 100F;
         GameManager = FindObjectOfType<GameManagerScript>();
 	}
 	

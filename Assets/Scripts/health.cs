@@ -147,6 +147,17 @@ public class health : MonoBehaviour {
             playerCharDead = Instantiate(playerDeadCorpse, playerChar.transform.position, playerChar.transform.rotation) as GameObject;
         }
         yield return new WaitForSeconds(0.2F);
+        if (this.gameObject.tag == "Player2")
+        {
+            GameManager.p2Alive = false;
+            GameManager.p2SpawnTimer = 1F;
+        }
+
+        if (this.gameObject.tag == "Player1")
+        {
+            GameManager.p1Alive = false;
+            GameManager.p1SpawnTimer = 1F;
+        }
         Destroy(this.gameObject);
     }
 
