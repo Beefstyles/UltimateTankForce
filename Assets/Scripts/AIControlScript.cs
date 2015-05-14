@@ -17,7 +17,7 @@ public class AIControlScript : MonoBehaviour {
     public Path path;
 
     //The AI's speed per second
-    private float speed = 80F;
+    private float speed = 150F;
 
 
     //The max distance from the AI to a waypoint for it to continue to the next waypoint
@@ -44,8 +44,7 @@ public class AIControlScript : MonoBehaviour {
         AITargets = FindObjectsOfType<AITargets>();
         seeker = GetComponent<Seeker>();
         newPathRequested = true;
-        AITarget("Home");
-        //StartCoroutine(AITarget("Home"));
+        AITarget("Home"); 
         PlayerAIShooting = GetComponent<PlayerAIShooting>();
     }
 
@@ -98,7 +97,7 @@ public class AIControlScript : MonoBehaviour {
 
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            Debug.Log("Freezing at currentWaypoint >= path.vectorPath.Count");
+//            Debug.Log("Freezing at currentWaypoint >= path.vectorPath.Count");
             newPathRequested = true;
             currentWaypoint = 0;
             AITarget("Home");

@@ -14,15 +14,14 @@ public class AreaOfDefenseAI : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D targetColl)
     {
-        if (targetColl.gameObject.tag == "Player1Shot" || targetColl.gameObject.tag == "Player2Shot")
+        if (targetColl.gameObject.tag == "Player1Shot" || targetColl.gameObject.tag == "Player2Shot" || targetColl.gameObject.tag == "Player3Shot" || targetColl.gameObject.tag == "Player4Shot" || targetColl.gameObject.tag == "EnemyShot")
         {
-            Debug.Log("Something entered called " + targetColl.name.ToString());
             PlayerAIShooting.targetShotNearby = true;
         }
     }
     void OnTriggerStay2D(Collider2D targetColl)
     {
-        if (targetColl.gameObject.tag == "Player1Shot" || targetColl.gameObject.tag == "Player2Shot")
+        if (targetColl.gameObject.tag == "Player1Shot" || targetColl.gameObject.tag == "Player2Shot" || targetColl.gameObject.tag == "Player3Shot" || targetColl.gameObject.tag == "Player4Shot" || targetColl.gameObject.tag == "EnemyShot")
         {
             // Debug.Log("Something is staying called " + targetColl.name.ToString());
             if (targetColl.gameObject != null)
@@ -41,9 +40,8 @@ public class AreaOfDefenseAI : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D targetColl)
     {
-        if (targetColl.gameObject.tag == "Player1")
+        if (targetColl.gameObject.tag == "Player1Shot" || targetColl.gameObject.tag == "Player2Shot" || targetColl.gameObject.tag == "Player3Shot" || targetColl.gameObject.tag == "Player4Shot" || targetColl.gameObject.tag == "EnemyShot")
         {
-
             PlayerAIShooting.targetShot = null;
             PlayerAIShooting.targetShotNearby = false;
             //Debug.Log("Something left called " + targetColl.name.ToString());

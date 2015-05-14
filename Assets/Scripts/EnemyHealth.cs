@@ -18,12 +18,10 @@ public class EnemyHealth : MonoBehaviour {
     private SpriteRenderer enemySprite;
     private GameObject enemyDead;
     public float shieldRechargeTime = 3F;
-    GameManagerScript GameManager;
 
     void Awake()
     {
         currentHealth = Health;
-        GameManager = FindObjectOfType<GameManagerScript>();
         enemySprite = GetComponent<SpriteRenderer>();
     }
 

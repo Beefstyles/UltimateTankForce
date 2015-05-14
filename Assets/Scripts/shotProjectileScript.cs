@@ -23,21 +23,21 @@ public class shotProjectileScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        AstarPath.active.UpdateGraphs(this.GetComponent<Collider2D>().bounds);
+        
 	}
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        if (coll.gameObject.tag == "Player1Shield" || coll.gameObject.tag == "Player2Shield")
+        if (coll.gameObject.tag == "Player1Shield" || coll.gameObject.tag == "Player2Shield" || coll.gameObject.tag == "Player3Shield" || coll.gameObject.tag == "Player4Shield")
         {
-            Debug.Log("Did damage to " + coll.gameObject.tag + " with " + attackDamage + " points");
+          //  Debug.Log("Did damage to " + coll.gameObject.tag + " with " + attackDamage + " points");
             Health = coll.gameObject.GetComponentInParent<health>();
             Health.TakeDamage(attackDamage, "Shield", this.gameObject.tag);
             Health.shieldRechargeTime = 3F;
             Destroy(this.gameObject);
             
         }
-        else if (coll.gameObject.tag == "Player1" || coll.gameObject.tag == "Player2")
+        else if (coll.gameObject.tag == "Player1" || coll.gameObject.tag == "Player2" || coll.gameObject.tag == "Player3" || coll.gameObject.tag == "Player4")
         {
             Health = coll.gameObject.GetComponentInParent<health>();
             Health.TakeDamage(attackDamage, "Player", this.gameObject.tag);

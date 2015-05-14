@@ -103,7 +103,7 @@ public class EnemyControl : MonoBehaviour
         StartCoroutine("targetLine");
         projectileClone = Instantiate(projectile, this.transform.position, Quaternion.identity) as GameObject;
         projectileClone.transform.parent = this.transform;
-        projectileClone.gameObject.tag = "TurretShot";
+        projectileClone.gameObject.tag = "EnemyShot";
         projectileClone.GetComponent<Rigidbody2D>().isKinematic = false;
         projectileClone.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileForce);
         fireRate = 3F;

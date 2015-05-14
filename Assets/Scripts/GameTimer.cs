@@ -9,23 +9,30 @@ public class GameTimer : MonoBehaviour {
     private string gameTimerSecondsString;
     public Text GameTimerTextMinutes;
     public Text GameTimerTextSeconds;
-    public float GameTimerF;
+    private float gameTimerF;
+
+    public float GameTimerF
+    {
+        get { return gameTimerF; }
+        set { gameTimerF = value; }
+    }
+   
     GameManagerScript GameManager;
 	// Use this for initialization
 	void Start () {
-        GameTimerF = 100F;
+        
         GameManager = FindObjectOfType<GameManagerScript>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameTimerF >= 0)
+        if (gameTimerF >= 0)
         {
-            GameTimerF -= Time.deltaTime;
+            gameTimerF -= Time.deltaTime;
         }
 
-        gameTimerMinutes = Mathf.FloorToInt(GameTimerF / 60);
-        gameTimerSeconds = Mathf.FloorToInt(GameTimerF - (gameTimerMinutes * 60));
+        gameTimerMinutes = Mathf.FloorToInt(gameTimerF / 60);
+        gameTimerSeconds = Mathf.FloorToInt(gameTimerF - (gameTimerMinutes * 60));
         GameTimerTextMinutes.text = gameTimerMinutes.ToString();
         gameTimerSecondsString = gameTimerSeconds.ToString();
         if (gameTimerSecondsString.Length < 2)
@@ -34,11 +41,5 @@ public class GameTimer : MonoBehaviour {
         }
         GameTimerTextSeconds.text = gameTimerSecondsString;
 
-
-
-        if (GameTimerF <= 0)
-        {
-            GameManager.gameOverScreen.SetActive(true);
-        }
 	}
 }

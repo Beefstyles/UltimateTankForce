@@ -77,7 +77,7 @@ public class health : MonoBehaviour {
             }
         }
 
-        if (shieldRechargeTime <= 0)
+        if (shieldRechargeTime >= 0)
         {
             shieldRechargeTime -= Time.deltaTime;
         }
@@ -86,6 +86,7 @@ public class health : MonoBehaviour {
         if (shieldRechargeTime <= 0 && currentShieldHealth < shieldHealth)
         {
             currentShieldHealth++;
+            shieldRechargeTime = 3F;
         }
 
     }
@@ -95,6 +96,7 @@ public class health : MonoBehaviour {
         if (target == "Shield")
         {
             currentShieldHealth -= amount;
+           
             if (currentShieldHealth <= 0 && !shieldIsDestroyed)
             {
                 shieldIsDestroyed = true;
@@ -107,25 +109,94 @@ public class health : MonoBehaviour {
             if (currentPlayerHealth <= 0 && !playerDead)
             {
                 playerDead = true;
-                if (Originator == "Player1Shot" && this.gameObject.tag == "Player1")
+                if (Originator == "Player1Shot")
                 {
-                GameManager.p1deaths++;
+                    switch (this.gameObject.tag)
+                    {
+                       case("Player1"):
+                       GameManager.p1deaths++;
+                       break;
+                       case ("Player2"):
+                       GameManager.p1kills++;
+                       GameManager.p2deaths++;
+                       break;
+                       case ("Player3"):
+                       GameManager.p1kills++;
+                       GameManager.p3deaths++;
+                       break;
+                       case ("Player4"):
+                       GameManager.p1kills++;
+                       GameManager.p4deaths++;
+                       break;
+                    }
+                    
                 }
-                else if (Originator == "Player2Shot" && this.gameObject.tag == "Player1")
+                else if (Originator == "Player2Shot")
                 {
-                    GameManager.p1deaths++;
-                    GameManager.p2kills++;
+                    switch (this.gameObject.tag)
+                    {
+                        case ("Player1"):
+                            GameManager.p2kills++;
+                            GameManager.p1deaths++;
+                            break;
+                        case ("Player2"):
+                            GameManager.p2deaths++;
+                            break;
+                        case ("Player3"):
+                            GameManager.p2kills++;
+                            GameManager.p3deaths++;
+                            break;
+                        case ("Player4"):
+                            GameManager.p2kills++;
+                            GameManager.p4deaths++;
+                            break;
+                    }
                 }
 
-                else if (Originator == "Player1Shot" && this.gameObject.tag == "Player2")
+                else if (Originator == "Player3Shot")
                 {
-                    GameManager.p2deaths++;
-                    GameManager.p1kills++;
+                    switch (this.gameObject.tag)
+                    {
+                        case ("Player1"):
+                            GameManager.p3kills++;
+                            GameManager.p1deaths++;
+                            break;
+                        case ("Player2"):
+                            GameManager.p3kills++;
+                            GameManager.p2deaths++;
+                            break;
+                        case ("Player3"):
+                            GameManager.p3deaths++;
+                            break;
+                        case ("Player4"):
+                            GameManager.p3kills++;
+                            GameManager.p4deaths++;
+                            break;
+                    }
                 }
-                else if (Originator == "Player2Shot" && this.gameObject.tag == "Player2")
+
+                else if (Originator == "Player4Shot")
                 {
-                    GameManager.p2deaths++;
+                    switch (this.gameObject.tag)
+                    {
+                        case ("Player1"):
+                            GameManager.p4kills++;
+                            GameManager.p1deaths++;
+                            break;
+                        case ("Player2"):
+                            GameManager.p4kills++;
+                            GameManager.p2deaths++;
+                            break;
+                        case ("Player3"):
+                            GameManager.p4kills++;
+                            GameManager.p3deaths++;
+                            break;
+                        case ("Player4"):
+                            GameManager.p4deaths++;
+                            break;
+                    }
                 }
+
                 StartCoroutine("PlayerDeath");
             }
         }
@@ -134,7 +205,7 @@ public class health : MonoBehaviour {
 
     IEnumerator ShieldDeath()
     {
-        yield return new WaitForSeconds(5F);
+        yield return new WaitForSeconds(3F);
         currentShieldHealth = shieldHealth;
         shieldIsDestroyed = false;
     }
@@ -142,21 +213,29 @@ public class health : MonoBehaviour {
     IEnumerator PlayerDeath()
     {
         //playerControl.VibrateController(0.5F);
-        if (this.gameObject.tag == "Player1" || this.gameObject.tag == "Player2")
+        if (this.gameObject.tag == "Player1" || this.gameObject.tag == "Player2" || this.gameObject.tag == "Player3" || this.gameObject.tag == "Player4")
         {
             playerCharDead = Instantiate(playerDeadCorpse, playerChar.transform.position, playerChar.transform.rotation) as GameObject;
         }
         yield return new WaitForSeconds(0.2F);
-        if (this.gameObject.tag == "Player2")
+        switch (this.gameObject.tag)
         {
-            GameManager.p2Alive = false;
-            GameManager.p2SpawnTimer = 1F;
-        }
-
-        if (this.gameObject.tag == "Player1")
-        {
+            case("Player1"):
             GameManager.p1Alive = false;
             GameManager.p1SpawnTimer = 1F;
+                break;
+            case ("Player2"):
+                GameManager.p2Alive = false;
+                GameManager.p2SpawnTimer = 1F;
+                break;
+            case ("Player3"):
+                GameManager.p3Alive = false;
+                GameManager.p3SpawnTimer = 1F;
+                break;
+            case ("Player4"):
+                GameManager.p4Alive = false;
+                GameManager.p4SpawnTimer = 1F;
+                break;
         }
         Destroy(this.gameObject);
     }

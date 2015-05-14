@@ -51,7 +51,7 @@ public class PlayerAIShooting : MonoBehaviour
 
     void Start()
     {
-                AILayerMask = ~AILayerMask;
+               AILayerMask = ~AILayerMask;
                fireRate = 1F;
                AIControlScript = GetComponent<AIControlScript>();
     }
@@ -134,8 +134,8 @@ public class PlayerAIShooting : MonoBehaviour
                         if (testRay2D != null)
                         {
                             Debug.DrawLine(shootPoint.transform.position, testRay2D.transform.position);
-                            Debug.Log("Linecast gives this " + testRay2D.collider.GetComponent<Collider2D>().tag);
-                            if (testRay2D.collider.tag == "Player1Shield" || testRay2D.collider.tag == "Player1")
+                            //Debug.Log("Linecast gives this " + testRay2D.collider.GetComponent<Collider2D>().tag);
+                            if (testRay2D.collider.tag == "Player1" || testRay2D.collider.tag == "Player2" || testRay2D.collider.tag == "Player3" || testRay2D.collider.tag == "Player4" || testRay2D.collider.tag == "Player1Shield" || testRay2D.collider.tag == "Player2Shield" || testRay2D.collider.tag == "Player3Shield" || testRay2D.collider.tag == "Player4Shield")
                             {
                                 targetAttackable = true;
                             }
@@ -170,7 +170,21 @@ public class PlayerAIShooting : MonoBehaviour
     {
         shieldOffTimer = 1F;
         projectileClone = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity) as GameObject;
-        projectileClone.gameObject.tag = "Player2Shot";
+        switch (this.gameObject.tag)
+        {
+            case("Player1"):
+                projectileClone.gameObject.tag = "Player1Shot";
+                break;
+            case ("Player2"):
+                projectileClone.gameObject.tag = "Player2Shot";
+                break;
+            case ("Player3"):
+                projectileClone.gameObject.tag = "Player3Shot";
+                break;
+            case ("Player4"):
+                projectileClone.gameObject.tag = "Player4Shot";
+                break;
+        }
         projectileClone.GetComponent<Rigidbody2D>().isKinematic = false;
         projectileClone.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileForce);
         fireRate = 1F;

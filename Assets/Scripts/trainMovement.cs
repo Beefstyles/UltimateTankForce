@@ -9,6 +9,7 @@ public class trainMovement : MonoBehaviour {
     public float trainRotationAngleY;
     public float trainRotationAngleZ;
     public float trainSpeed = 100F;
+    private float updateGraph;
     public GameObject train;
     TrainMovementPart trainMovementRef;
     public bool translateObject;
@@ -17,17 +18,28 @@ public class trainMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         stageTimer = 0F;
+        updateGraph = .6F;
        }
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         stageTimer += Time.deltaTime;
 
+        if (updateGraph >= 0F)
+        {
+            updateGraph -= Time.deltaTime;
+        }
+
+        if (updateGraph <= 0F)
+        {
+            AstarPath.active.UpdateGraphs(this.GetComponent<Collider2D>().bounds);
+            updateGraph = .6F;
+        }
         if (stageTimer >= 0 && stageTimer <= 20)
         {
-            trainMovementVector = new Vector2(1, 0);
-            trainSpeed = 100F;
+            trainMovementVector = new Vector2(0, -1);
+            trainSpeed = 10F;
             Translation();
         }
         else if (stageTimer > 20 && stageTimer <= 30)

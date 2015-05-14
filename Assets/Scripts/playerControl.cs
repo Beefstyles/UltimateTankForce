@@ -5,8 +5,8 @@ using XInputDotNetPure;
 
 public class playerControl : MonoBehaviour
 {
-    public Boundary boundary;
-    private float speed = 250F;
+    //public Boundary boundary;
+    private float speed = 150F;
     public float h;
     public float v;
     public float angH;

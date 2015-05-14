@@ -4,21 +4,8 @@ using XInputDotNetPure;
 using UnityEngine.UI;
 
 
-[System.Serializable]
-public class Boundary
-{
-    public float xMin, xMax, yMin, yMax;
-}
 
-[System.Serializable]
-public class TextClass
-{
-    public Text p1KillCounter, p2KillCounter, p3KillCounter, p4KillCounter, p1DeathCounter, p2DeathCounter, p3DeathCounter, p4DeathCounter;
-    public Text finalP1Score, finalP2Score, finalP3Score, finalP4Score;
-    public Text player1SpawnTimerText, player2SpawnTimerText, player3SpawnTimerText, player4SpawnTimerText;
-}
-
-public class GameManagerScript : CarryOverInfoScript
+public class GameManagerScriptCoop : CarryOverInfoScript
 {
     public float p1SpawnTimer, p2SpawnTimer, p3SpawnTimer, p4SpawnTimer;
      public bool p1Alive, p2Alive, p3Alive, p4Alive;
@@ -30,7 +17,7 @@ public class GameManagerScript : CarryOverInfoScript
      public Transform p1Spawn, p2Spawn, p3Spawn, p4Spawn;
      public GameObject p1AI, p2AI, p3AI, p4AI;
      public GameObject gameOverScreen;
-     GameTimer GameTimer;
+    
      public TextClass TextClass;
      public GameObject gameOnScreen;
      private bool gameOver;
@@ -55,32 +42,20 @@ public class GameManagerScript : CarryOverInfoScript
         p2Alive = false;
         p3Alive = false;
         p4Alive = false;
-        GameTimer = FindObjectOfType<GameTimer>();
-        gameOnScreen.SetActive(true);
-        gameOverScreen.SetActive(false);
         player1AI = false;
         player2AI = true;
-        player3AI = true;
-        player4AI = true;
-        GameTimer.GameTimerF = 10F;
+        player3AI = false;
+        player4AI = false;
         twoPlayer = true;
-        threePlayer = true;
-        fourPlayer = true;
+        threePlayer = false;
+        fourPlayer = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        TextClass.p1KillCounter.text = p1kills.ToString();
-        TextClass.p2KillCounter.text = p2kills.ToString();
-        TextClass.p3KillCounter.text = p3kills.ToString();
-        TextClass.p4KillCounter.text = p4kills.ToString();
-        TextClass.p1DeathCounter.text = p1deaths.ToString();
-        TextClass.p2DeathCounter.text = p2deaths.ToString();
-        TextClass.p3DeathCounter.text = p3deaths.ToString();
-        TextClass.p4DeathCounter.text = p4deaths.ToString();
 
-        if (twoPlayer)
+       if (twoPlayer)
         {
             if (p1SpawnTimer >= 0)
             {
@@ -165,21 +140,8 @@ public class GameManagerScript : CarryOverInfoScript
             }
         }
         
-        if (p1Alive)
-        {
-            TextClass.player1SpawnTimerText.text = "";
-        }
+    
 
-        if (p2Alive)
-        {
-            TextClass.player2SpawnTimerText.text = "";
-        }
-
-        if (GameTimer.GameTimerF <= 0 && !gameOver)
-        {
-            EndGame();
-            
-        }
     }
 
     void EndGame()
@@ -187,8 +149,6 @@ public class GameManagerScript : CarryOverInfoScript
         gameOver = true;
         gameOnScreen.SetActive(false);
         gameOverScreen.SetActive(true);
-        GameTimer.GameTimerTextMinutes.text = "";
-        GameTimer.GameTimerTextSeconds.text = "";
         finalP1ScoreInt = p1kills - p1deaths;
         finalP2ScoreInt = p2kills - p2deaths;
         finalP3ScoreInt = p3kills - p3deaths;
